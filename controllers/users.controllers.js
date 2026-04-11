@@ -22,10 +22,29 @@ export const postUser = async(req, res)=>{
 
 }
 export const putUser = async(req, res)=>{
+    const id = res.params.id;
+    const user = await User.findById(id);
+    if(req.body.name != null){
+        user.name = req.body.name;
+    }
+    if(req.body.username != null){
+        user.username= req.body.username;
+    }
+    if(req.body.password != null){
+        user.password= req.body.password;
+    }
+    user.save();
+    res.json(user);
 
 }
 export const delUser = async(req, res)=>{
-
+    const us = User.findById(req.id);
+    if(us != null){
+        User.delUser(req.id);
+        res.json({eliminated:req.id});
+    }else {
+        res.json({error:"id_not_found"});
+    }
 }
 
 
